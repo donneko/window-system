@@ -1,0 +1,10 @@
+node_modules
+dist
+coverage
+docs
+package-lock.json
+.prettierrc
+README.md
+.github
+CHANGELOG.md
+package.json

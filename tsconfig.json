@@ -1,0 +1,57 @@
+{
+    "compilerOptions": {
+        /* =========================
+        JavaScript / 出力設定
+    ========================= */
+
+        "target": "ES2023",
+        "module": "NodeNext",
+        "moduleResolution": "NodeNext",
+
+        "outDir": "./dist",
+        "rootDir": "./src",
+        "declaration": true,
+
+        /* =========================
+        型安全
+    ========================= */
+
+        "strict": true,
+
+        "noImplicitAny": true,
+        "strictNullChecks": true,
+        "strictFunctionTypes": true,
+
+        "noUncheckedIndexedAccess": true,
+        "exactOptionalPropertyTypes": true,
+
+        /* =========================
+        import/export
+    ========================= */
+
+        "esModuleInterop": true,
+        "allowSyntheticDefaultImports": true,
+
+        "resolveJsonModule": true,
+
+        /* =========================
+        DX（開発体験）
+    ========================= */
+
+        "sourceMap": false,
+
+        "skipLibCheck": true,
+
+        "forceConsistentCasingInFileNames": true,
+
+        /* =========================
+        Node.js
+    ========================= */
+
+        "types": ["node"]
+    },
+
+    "include": ["src"],
+
+    "exclude": ["node_modules", "dist", "templates"]
+}
