@@ -30,7 +30,4 @@ export type WindowCreateConfig = {
     status?: Partial<WindowStatus>;
 };
 
-export type WindowChange = Omit<Partial<WindowCreateConfig>, "id">;
-
-/** @deprecated Use WindowCreateConfig. */
-export type WindowConfig = WindowCreateConfig;
+export type WindowUpdate = Omit<Partial<WindowCreateConfig>, "id">;

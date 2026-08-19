@@ -20,12 +20,12 @@ npm run build
 ブラウザで利用する場合はJavaScriptとCSSの両方を読み込みます。
 
 ```ts
-import { createWindowSystem } from "@donneko/window-system";
+import { WindowManager } from "@donneko/window-system";
 import "@donneko/window-system/window-style.css";
 
-const windows = createWindowSystem();
+const windows = new WindowManager();
 
-const id = windows.create({
+const id = windows.createWindow({
     title: "管理画面",
     contentUrl: "/admin/index.html",
     x: 40,
@@ -36,7 +36,7 @@ const id = windows.create({
     minHeight: 180,
 });
 
-windows.change(id, {
+windows.updateWindow(id, {
     title: "更新済み",
     status: { isMaximized: true },
 });
@@ -45,8 +45,8 @@ windows.change(id, {
 配置先を指定する場合、その要素には通常 `position: relative` と表示領域のサイズを設定します。
 
 ```ts
-const windows = createWindowSystem({
-    baseElement: document.querySelector<HTMLElement>("#desktop")!,
+const windows = new WindowManager({
+    container: document.querySelector<HTMLElement>("#desktop")!,
 });
 ```
 
@@ -55,11 +55,11 @@ const windows = createWindowSystem({
 `WindowSnapshot` はDOMを含まないため、そのままJSONへ保存できます。
 
 ```ts
-localStorage.setItem("windows", JSON.stringify(windows.allWindow()));
+localStorage.setItem("windows", JSON.stringify(windows.getWindows()));
 
 const snapshots = JSON.parse(localStorage.getItem("windows") ?? "[]");
 for (const snapshot of snapshots) {
-    windows.create(snapshot);
+    windows.createWindow(snapshot);
 }
 ```
 
@@ -71,6 +71,9 @@ for (const snapshot of snapshots) {
 
 ```bash
 npm test
+npm run typecheck
+npm run lint
+npm run format:check
 npm run build
 npm run docs
 ```

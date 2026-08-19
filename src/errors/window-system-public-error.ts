@@ -1,5 +1,10 @@
 export type WindowSystemErrorCode =
-    "DUPLICATE_ID" | "INVALID_CONFIG" | "INVALID_ID" | "INVALID_URL" | "WINDOW_NOT_FOUND";
+    | "DUPLICATE_ID"
+    | "INVALID_CONFIG"
+    | "INVALID_ID"
+    | "INVALID_URL"
+    | "MANAGER_DESTROYED"
+    | "WINDOW_NOT_FOUND";
 
 export class WindowSystemError extends Error {
     readonly code: WindowSystemErrorCode;

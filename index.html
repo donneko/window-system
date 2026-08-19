@@ -21,10 +21,10 @@
     </head>
     <body>
         <script type="module">
-            import { createWindowSystem } from "./dist/main.js";
+            import { WindowManager } from "./dist/main.js";
 
-            const windows = createWindowSystem();
-            windows.create({
+            const windows = new WindowManager();
+            windows.createWindow({
                 title: "WindowSystem demo",
                 contentUrl: "./demo-content.html",
                 x: 40,
@@ -34,7 +34,7 @@
                 minWidth: 240,
                 minHeight: 140,
             });
-            windows.create({
+            windows.createWindow({
                 title: "Second window",
                 contentUrl: "./demo-content.html",
                 x: 260,

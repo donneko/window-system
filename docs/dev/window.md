@@ -4,21 +4,25 @@
 
 WindowSystemは次の二層で構成されています。
 
-- `WindowManager`: ID、全ウィンドウ、アクティブ状態、z-index、公開APIを管理
-- `WindowSystem`: 単一ウィンドウのDOM、iframe、移動、リサイズ、表示状態を管理
+- `WindowManager`: 公開APIとウィンドウの登録・ライフサイクルを管理
+- `WindowStack`: アクティブ状態とz-index順序を管理
+- `ManagedWindow`: 単一ウィンドウの状態と各コンポーネントを調整
+- `WindowView`: DOM生成、iframe、描画、DOM破棄を担当
+- `WindowPointerController`: 移動・リサイズとPointer Captureを担当
 
-ライブラリをimportしただけではDOMへアクセスしません。`createWindowSystem()` を呼び出した時点で配置先を解決します。
+ライブラリをimportしただけではDOMへアクセスしません。`new WindowManager()` の呼び出し時に配置先を解決します。
 
 ## 公開API
 
 ```ts
-const api = createWindowSystem({ baseElement?: HTMLElement });
+const manager = new WindowManager({ container?: HTMLElement });
 
-api.create(configOrSnapshot): string;
-api.delete(id): void;
-api.change(id, patch): void;
-api.window(id): WindowSnapshot;
-api.allWindow(): WindowSnapshot[];
+manager.createWindow(configOrSnapshot): string;
+manager.removeWindow(id): void;
+manager.updateWindow(id, update): void;
+manager.getWindow(id): WindowSnapshot;
+manager.getWindows(): WindowSnapshot[];
+manager.destroy(): void;
 ```
 
 存在しないID、重複ID、不正なURLやサイズ制約には `WindowSystemError` を投げます。
@@ -26,10 +30,10 @@ api.allWindow(): WindowSnapshot[];
 ### create
 
 ```ts
-const id = api.create({
-    id: "server-console",       // 省略時は自動生成
+const id = manager.createWindow({
+    id: "server-console", // 省略時は自動生成
     title: "Server console",
-    titleDisplayType: "auto",  // auto | scroll | stint
+    titleDisplayType: "auto", // auto | scroll | stint
     iconUrl: "/icons/server.png",
     contentUrl: "/console/index.html",
     x: 20,
@@ -38,7 +42,7 @@ const id = api.create({
     height: 400,
     minWidth: 320,
     minHeight: 180,
-    maxWidth: 1200,             // nullなら上限なし
+    maxWidth: 1200, // nullなら上限なし
     maxHeight: null,
     movable: true,
     resizable: true,
@@ -54,12 +58,12 @@ const id = api.create({
 
 `contentUrl` は `document.baseURI` を基準に絶対URLへ正規化します。対応プロトコルはHTTP、HTTPS、about、Blobです。iframeに独自sandboxは追加しません。
 
-### change
+### updateWindow
 
 `create` と同じ項目を部分更新できます。ただしIDは変更できません。
 
 ```ts
-api.change(id, {
+manager.updateWindow(id, {
     x: 100,
     y: 80,
     movable: false,
@@ -69,16 +73,20 @@ api.change(id, {
 
 最大化すると元の位置とサイズが `restoreBounds` に保存されます。最大化解除時とJSON復元後の解除時に同じ領域へ戻ります。最小化と最大化を同時に有効にはできません。
 
-### window / allWindow
+### getWindow / getWindows
 
-`window` は指定IDのコピー、`allWindow` はz-index昇順のコピーを返します。戻り値を変更しても内部状態は変化しません。
+`getWindow` は指定IDのコピー、`getWindows` はz-index昇順のコピーを返します。戻り値を変更しても内部状態は変化しません。
 
 ```ts
-const snapshot = api.window(id);
-const serialized = JSON.stringify(api.allWindow());
+const snapshot = manager.getWindow(id);
+const serialized = JSON.stringify(manager.getWindows());
 ```
 
-スナップショットはJSON直列化可能で、各要素をz-index昇順に `create` へ渡すと重なり順とアクティブ状態も復元されます。
+スナップショットはJSON直列化可能で、各要素をz-index昇順に `createWindow` へ渡すと重なり順とアクティブ状態も復元されます。
+
+### destroy
+
+`destroy()` は全ウィンドウ、DOM、Pointer Eventを解放する終端操作です。複数回呼び出しても安全ですが、破棄後の操作は `MANAGER_DESTROYED` エラーになります。
 
 ## 操作
 
@@ -111,4 +119,4 @@ import "@donneko/window-system/window-style.css";
 
 - iframe先のCSP、`X-Frame-Options`、同一生成元ポリシーは回避しません。
 - LocalStorageなどへの永続化は利用側で実装します。
-- HTML文字列のBlob変換、共有Blobキャッシュ、旧版の `addWindow` / `chenge*` APIは提供しません。
+- HTML文字列のBlob変換、共有Blobキャッシュ、旧版および初期WIP版のAPI aliasは提供しません。
