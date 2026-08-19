@@ -5,7 +5,7 @@ export function validationEmoji(){
     try {
         const EMOJI = emojis;
         const index = Math.floor(Math.random() * EMOJI.length);
-        outEmoji = EMOJI[index];
+        outEmoji = EMOJI[index] ?? outEmoji;
     } catch (e) {
         console.error(e)
     } finally {

@@ -11,8 +11,8 @@ export type ValidationMap = {
 export type BaseErrorOption = {
     meta?: unknown;
     cause?: Error;
-    label?: string;
-    message?: string;
+    label?: string | undefined;
+    message?: string | undefined;
 };
 export type ValidationOption = BaseErrorOption & {
     checkNil?: boolean;

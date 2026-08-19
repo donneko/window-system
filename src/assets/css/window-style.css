@@ -1,682 +1,245 @@
-/* ウィンドウ全体 */
-        .window{
-            /* root ある程度手動での変更が簡単にしたいです。 */
-            /* 重複箇所は必ず・スタイル変更の際に変更が簡単になりそうな箇所は入れる */
-            /* JSで変更される箇所は書かない */
+.window {
+    --ws-border-light: #f4f4f4;
+    --ws-border-dark: #3f3f3f;
+    --ws-header-active: linear-gradient(90deg, #00008b 30%, #0095d9 100%);
+    --ws-header-inactive: linear-gradient(90deg, #7e7e80 30%, #cecece 100%);
+    position: absolute;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    min-height: 0;
+    overflow: visible;
+    border: 3px ridge var(--ws-border-light);
+    background: #929292;
+    box-shadow: 0 5px 10px 5px #00000035;
+    color: #fff;
+    font:
+        14px Arial,
+        sans-serif;
+    user-select: none;
+}
 
-            /* デバッグ用 当たり判定 */
-            /* ハイライト */
-                /* background */
-                --window-all-debug-highlight-background: #ff00ff;
-                /* opacity */
-                    --window-all-debug-highlight-opacity: 0;
-            /* END */
-            /* 当たり判定 【offsetの設定】 frame-border + offset */
-            /* ハイライト */
-                /* offset */
-                    --window-decision-frame-size-left-offset: 2px;
-                    --window-decision-frame-size-right-offset: 2px;
-                    --window-decision-frame-size-top-offset: 2px;
-                    --window-decision-frame-size-bottom-offset: 2px;
-            /* END */
-            
+.window.is-hidden {
+    display: none;
+}
 
-            /* .Window系 */
-                /* border系 */
-                    /* borderの色系 */
-                        --frame-border-top-color: #ffffff;
-                        --frame-border-bottom-color: #D3D3D3;
-                        --frame-border-left-color: #ffffff;
-                        --frame-border-right-color: #D3D3D3;
-                    /* borderの色系 */
-                        --frame-border-top-style: ridge;
-                        --frame-border-bottom-style: ridge;
-                        --frame-border-left-style: ridge;
-                        --frame-border-right-style: ridge;
-                    /* borderのサイズ系 */
-                        --frame-border-top-size: 3px;
-                        --frame-border-bottom-size: 3px;
-                        --frame-border-left-size: 3px;
-                        --frame-border-right-size: 3px;
-                /* box-shadow */
-                    /* box-shadowの色 */
-                        --frame-box-shadow-color: #00000035;
-                    /* box-shadowのぼかし */
-                        --frame-box-shadow-blur: 10px;
-                    /* box-shadowの放射 */
-                        --frame-box-shadow-spread: 5px;
-                    /* box-shadowのXoffset */
-                        --frame-box-shadow-x-offset: 0px;
-                    /* box-shadowのYoffset */
-                        --frame-box-shadow-y-offset: 5px;
-                /* background */
-                    /* backgroundの色系 */
-                        --frame-background-color: #929292;
-                /* user-select系 */
-                        --frame-user-select: none;
-                /* border-radius系 */
-                    /* border-radiusのサイズ系 */
-                        --frame-border-top-left-radius: 0px;
-                        --frame-border-top-right-radius: 0px;
-                        --frame-border-bottom-left-radius: 0px;
-                        --frame-border-bottom-right-radius: 0px;
-                /* font-size系 */
-                        --frame-font-size: 14px;
-                /* overflow系 */
-                        --frame-overflow:visible;
+.window.is-minimized {
+    height: auto !important;
+}
 
-            /* .Window の is-transparent 系 */
-                /* background */
-                    --frame-transparent-background: #c3c3c375;
-                /* backdrop-filter */
-                    --frame-transparent-backdrop-filter: blur(2px);
-            
-            /* window-header 系 */
-                /* height */
-                    --window-header-height: 28px;
-                /* background */
-                    /* --window-header-background: #00008Bff; */
-                    --window-header-background: linear-gradient(90deg, #00008Bff 30%, #0095d9 100%);
-                /* border */
-                    /* borderの色系 */
-                        --window-header-border-top-color: #D3D3D3;
-                        --window-header-border-bottom-color: #D3D3D3;
-                        --window-header-border-left-color: #D3D3D3;
-                        --window-header-border-right-color: #D3D3D3;
-                    /* borderの色系 */
-                        --window-header-border-top-style: solid;
-                        --window-header-border-bottom-style: solid;
-                        --window-header-border-left-style: solid;
-                        --window-header-border-right-style: solid;
-                    /* borderのサイズ系 */
-                        --window-header-border-top-size: 2px;
-                        --window-header-border-bottom-size: 2px;
-                        --window-header-border-left-size: 2px;
-                        --window-header-border-right-size: 2px;
-                /* border-radius系 */
-                    /* border-radiusのサイズ系 */
-                        --window-header-border-top-left-radius: 0px;
-                        --window-header-border-top-right-radius: 0px;
-                        --window-header-border-bottom-left-radius: 0px;
-                        --window-header-border-bottom-right-radius: 0px;
-                /* cursor */
-                    --window-header-cursor: move;
-                /* padding */
-                    --window-header-padding-top:2px;
-                    --window-header-padding-bottom:2px;
-                    --window-header-padding-left:4px;
-                    --window-header-padding-right:4px;
-            /* window-header-title */
-                /* font-size */
-                    --window-header-title-font-size: 1em;
-                /* overflow */
-                    --window-header-title-overflow: hidden;
-            /* window-header-title-text */
-                /* color */
-                    --window-header-title-text-color: #ffffff;
-                /* Animation */
-                    /* アニメーションは基本的にスクロールするだけで、変える必要がない */
-                
-            /* window-header-remove */
-                /* height */
-                    --window-header-remove-height: 100%;
-                /* margin */
-                    --window-header-remove-margin-left: 10px;
-                    --window-header-remove-margin-right: 0px;
-            /* window-header-remove-button */
-                /* font */
-                    --window-header-remove-button-font-size: 1em;
-                    --window-header-remove-button-font-family: Arial, sans-serif;
-                /* border */
-                    /* borderの色系 */
-                        --window-header-remove-button-border-top-color: #D3D3D3;
-                        --window-header-remove-button-border-bottom-color: #2D2D2D;
-                        --window-header-remove-button-border-left-color: #D3D3D3;
-                        --window-header-remove-button-border-right-color: #2D2D2D;
-                    /* borderのスタイル系 */
-                        --window-header-remove-button-border-top-style: ridge;
-                        --window-header-remove-button-border-bottom-style: ridge;
-                        --window-header-remove-button-border-left-style: ridge;
-                        --window-header-remove-button-border-right-style: ridge;
-                    /* borderのサイズ系 */
-                        --window-header-remove-button-border-top-size: 3px;
-                        --window-header-remove-button-border-bottom-size: 3px;
-                        --window-header-remove-button-border-left-size: 3px;
-                        --window-header-remove-button-border-right-size: 3px;
-                /* background */
-                    --window-header-remove-button-background: #E2041B;
-                /* color */
-                    --window-header-remove-button-color: #ffffff;
-                /* cursor */
-                    --window-header-remove-button-cursor: pointer;
-                /* user-select */
-                    --window-header-remove-button-user-select: none;
-            /* window-header-remove-button-is-active */
-                /* border-style変更は :active 側で行うため、ここでは設定しない */
-            /* window-body */
-                /* border系 */
-                    /* borderの色系 */
-                        --window-body-border-top-color: #D3D3D3;
-                        --window-body-border-bottom-color: #D3D3D3;
-                        --window-body-border-left-color: #D3D3D3;
-                        --window-body-border-right-color: #D3D3D3;
-                    /* borderのスタイル系 */
-                        --window-body-border-top-style: solid;
-                        --window-body-border-bottom-style: solid;
-                        --window-body-border-left-style: solid;
-                        --window-body-border-right-style: solid;
-                    /* borderのサイズ系 */
-                        --window-body-border-top-size: 0px;
-                        --window-body-border-bottom-size: 0px;
-                        --window-body-border-left-size: 0px;
-                        --window-body-border-right-size: 0px;
-                /* overflow */
-                    --window-body-overflow: hidden;
-            /* window-body-content */
-                /* border系 */
-                    /* borderの色系 */
-                        --window-body-content-border-top-color: #2D2D2D;
-                        --window-body-content-border-bottom-color: #D3D3D3;
-                        --window-body-content-border-left-color: #2D2D2D;
-                        --window-body-content-border-right-color: #D3D3D3;
-                    /* borderのスタイル系 */
-                        --window-body-content-border-top-style: ridge;
-                        --window-body-content-border-bottom-style: groove;
-                        --window-body-content-border-left-style: ridge;
-                        --window-body-content-border-right-style: groove;
-                    /* borderのサイズ系 */
-                        --window-body-content-border-top-size: 3px;
-                        --window-body-content-border-bottom-size: 3px;
-                        --window-body-content-border-left-size: 3px;
-                        --window-body-content-border-right-size: 3px;
-                /* overflow */
-                    --window-body-content-overflow: auto;
-            /* ドラッグ中 */
-            /* window-body-content::after */
-                /* backdrop-filter */
-                    --window-body-content-after-backdrop-filter: blur(0px);
-            /* window-body-content.is-drag::after */
-                /* backdrop-filter */
-                    --window-body-content-is-drag-after-backdrop-filter: blur(1px);
-                /* background */
-                    --window-body-content-is-drag-after-background: #ffffff45;
-            
-            /* アクティブではない */
-            /* .window:not(.is-active) .window-header */
-                /* background */
-                    --window-not-active-window-header-background: linear-gradient(90deg, rgb(126, 126, 128) 30%, #cecece 100%);
-            
-            /* WindowSystem 縁(当たり判定) */
-            /* 当たり判定読み込みCSSプロパティ */
-                /* --setting-load-window-decision-background:#ff00ff);
-                --setting-load-window-decision-opacity:0.5; */
-                --setting-load-window-decision-background:var(--window-all-debug-highlight-background);
-                --setting-load-window-decision-opacity:var(--window-all-debug-highlight-opacity);
-            /* .window-decision */
-            /* デバッグ用 */
-                /* background */
-                    --window-decision-background: var(--setting-load-window-decision-background);
-                /* opacity */
-                    --window-decision-opacity:var(--setting-load-window-decision-opacity);
-            /* WindowFrameのボーダーからを基準に考えて、それが当たり判定になるようにこの要素の大きさも合わせる */
-            /* 場合によっては変える可能性があるので、ここで一度別変数化 */
-            /* window-decision window-frame important */
-                /* size */
-                    --window-decision-frame-size-left: calc( var(--window-decision-frame-size-left-offset) + var(--frame-border-left-size));
-                    --window-decision-frame-size-right: calc( var(--window-decision-frame-size-right-offset) + var(--frame-border-right-size));
-                    --window-decision-frame-size-top: calc( var(--window-decision-frame-size-top-offset) + var(--frame-border-top-size));
-                    --window-decision-frame-size-bottom: calc( var(--window-decision-frame-size-bottom-offset) + var(--frame-border-bottom-size));
-            /*  top/bottom/left/right */
-            /* .window-decision-top */
-                /* size */
-                    --window-decision-top-height: var(--window-decision-frame-size-top);
-            /* .window-decision-bottom */
-                /* size */
-                    --window-decision-bottom-height: var(--window-decision-frame-size-bottom);
-            /* .window-decision-left */
-                /* size */
-                    --window-decision-left-width: var(--window-decision-frame-size-left);
-            /* .window-decision-right */
-                /* size */
-                    --window-decision-right-width: var(--window-decision-frame-size-right);
-            /* top-left/top-right/bottom-left/bottom-right */
-            /* .window-decision-top-left */
-                /* size */
-                    --window-decision-top-left-width: var(--window-decision-frame-size-left);
-                    --window-decision-top-left-height: var(--window-decision-frame-size-top);
-            /* .window-decision-top-right */
-                /* size */
-                    --window-decision-top-right-width: var(--window-decision-frame-size-right);
-                    --window-decision-top-right-height: var(--window-decision-frame-size-top);
-            /* .window-decision-bottom-left */
-                /* size */
-                    --window-decision-bottom-left-width: var(--window-decision-frame-size-left);
-                    --window-decision-bottom-left-height: var(--window-decision-frame-size-bottom);
-            /* .window-decision-bottom-right */
-                /* size */
-                    --window-decision-bottom-right-width: var(--window-decision-frame-size-right);
-                    --window-decision-bottom-right-height: var(--window-decision-frame-size-bottom);
-                }   
-        .window{
-            /* ここに内容を書いて!! */
-            position: absolute;
-            /* left: 50px; これはコメントアウト、test用;JSで制御するときに邪魔になる。
-            top: 100px; */
-            font-size: var(--frame-font-size);
-            width: 400px;
-            height: 250px;
-            display: flex;
-            flex-direction: column;
-            border-top-left-radius: var(--frame-border-top-left-radius);
-            border-top-right-radius: var(--frame-border-top-right-radius);
-            border-bottom-left-radius: var(--frame-border-bottom-left-radius);
-            border-bottom-right-radius: var(--frame-border-bottom-right-radius);
-            background: var(--frame-background-color);
-            overflow: var(--frame-overflow);
-            border-top: var(--frame-border-top-size) var(--frame-border-top-style) var(--frame-border-top-color);
-            border-left: var(--frame-border-left-size) var(--frame-border-left-style) var(--frame-border-left-color);
-            border-right: var(--frame-border-right-size) var(--frame-border-right-style) var(--frame-border-right-color);
-            border-bottom: var(--frame-border-bottom-size) var(--frame-border-bottom-style) var(--frame-border-bottom-color);
-            user-select: var(--frame-user-select);
-            box-shadow: var(--frame-box-shadow-x-offset) var(--frame-box-shadow-y-offset) var(--frame-box-shadow-blur) var(--frame-box-shadow-spread) var(--frame-box-shadow-color);
-        }
-        .window.is-transparent{
-            background: var(--frame-transparent-background);
-            backdrop-filter: var(--frame-transparent-backdrop-filter);
-        }
-        /* ウィンドウのヘッダー */
-        .window-header{
-            height: var(--window-header-height);
-            box-sizing: border-box;
-            display: flex;
-            background: var(--window-header-background);
-            border-top: var(--window-header-border-top-size) var(--window-header-border-top-style) var(--window-header-border-top-color);
-            border-left: var(--window-header-border-left-size) var(--window-header-border-left-style) var(--window-header-border-left-color);
-            border-right: var(--window-header-border-right-size) var(--window-header-border-right-style) var(--window-header-border-right-color);
-            border-bottom: var(--window-header-border-bottom-size) var(--window-header-border-bottom-style) var(--window-header-border-bottom-color);
-            border-top-left-radius: var(--window-header-border-top-left-radius);
-            border-top-right-radius: var(--window-header-border-top-right-radius);
-            border-bottom-left-radius: var(--window-header-border-bottom-left-radius);
-            border-bottom-right-radius: var(--window-header-border-bottom-right-radius);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 5px;
-            padding: var(--window-header-padding-top) var(--window-header-padding-right) var(--window-header-padding-bottom) var(--window-header-padding-left);
-            cursor: var(--window-header-cursor);
-        }
-        /* ウィンドウのヘッダーのタイトル */
-        .window-header-title{
-            flex-grow: 1;
-            overflow: var(--window-header-title-overflow);
-            font-size: var(--window-header-title-font-size);
-            pointer-events: none;
-        }
-        .window-header-title-text{
-            display: inline-block;
-            width: auto;
-            color: var(--window-header-title-text-color);
-            white-space: nowrap;
-        }
-        /* スクロールアニメーション */
-        .window-header-title-text.is-scroll-animation{
-            animation: ScrollAnimationFirst 10s linear 1 1s, ScrollAnimation 10s linear infinite 11s;
-        }
-        @keyframes ScrollAnimationFirst {
-            from{
-                transform: translateX(0%);
+.window.is-minimized .window-body,
+.window.is-minimized .window-decision {
+    display: none;
+}
 
-            }
-            to{
-                transform: translateX(-100%);
-            }
-        }
-        @keyframes ScrollAnimation{
-            0%{
-                transform: translateX(100%);
-            }
-            50%{
-                transform: translateX(0%);
-            }
-            100%{
-                transform: translateX(-100%) ;
-            }
-        }
-        /* ウィンドウアイコン */
-        .window:not(.is-icon) .window-header-icon-box{
-            display: none;
-        }
-        .window-header-icon-box{
-            height: var(--window-header-remove-height);
-            margin: 0px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            pointer-events: none;
-        }
-        .window-header-icon{
-            height: 100%;
-            width: auto;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            aspect-ratio: 1/1;
-            box-sizing: border-box;
-        }
-        /* ウィンドウのボタンエリア */
-        .window-header-button-area{
-            height: var(--window-header-remove-height);
-            margin: 0px;
-            gap: 3px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            pointer-events: none;
-        }
-        /* ウィンドウボタン */
-        .window-header-button-box{
-            height: var(--window-header-remove-height);
-            margin: 0px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            pointer-events: none;
-        }
-        .window-header-button:active{
-            border-style: groove;
-            cursor: pointer;
-        }
-        .window-header-button{
-            all:unset;
-            height: 100%;
-            width: auto;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            aspect-ratio: 1/1;
-            box-sizing: border-box;
-            border-top: var(--window-header-remove-button-border-top-color) var(--window-header-remove-button-border-top-style) var(--window-header-remove-button-border-top-size);
-            border-left: var(--window-header-remove-button-border-left-color) var(--window-header-remove-button-border-left-style) var(--window-header-remove-button-border-left-size);
-            border-right: var(--window-header-remove-button-border-right-color) var(--window-header-remove-button-border-right-style) var(--window-header-remove-button-border-right-size);
-            border-bottom: var(--window-header-remove-button-border-bottom-color) var(--window-header-remove-button-border-bottom-style) var(--window-header-remove-button-border-bottom-size);
-            cursor: var(--window-header-remove-button-cursor);
-            pointer-events: all;
-            user-select: var(--window-header-remove-button-user-select);
-            font-family: var(--window-header-remove-button-font-family);
-        }
-        /* ボタンのログ */
-        .window-header-log-button{
-            display: flex;
-            font-size: 0.6em;
-            background: #b0b0b0 ;
-            color: #2b2b2b;
-        }
-        .window:not(.is-DebagMode) .window-header-button-box-log{
-            display: none;
-        }
-        .window:not(.is-DebagMode) .window-header-log-button{
-            display: none;
-        }
-        /* 消去ボタン */
-        .window-header-remove-button{
-            font-size: var(--window-header-remove-button-font-size);
-            font-family: var(--window-header-remove-button-font-family);
-            background: var(--window-header-remove-button-background);
-            color: var(--window-header-remove-button-color);
-        }
-        /* ウィンドウのボディー */
-        .window-body{
-            position: relative;
-            flex-grow: 1;
-            height: 100%;
-            border-top: var(--window-body-border-top-size) var(--window-body-border-top-style) var(--window-body-border-top-color);
-            border-left: var(--window-body-border-left-size) var(--window-body-border-left-style) var(--window-body-border-left-color);
-            border-right: var(--window-body-border-right-size) var(--window-body-border-right-style) var(--window-body-border-right-color);
-            border-bottom: var(--window-body-border-bottom-size) var(--window-body-border-bottom-style) var(--window-body-border-bottom-color);
-            overflow: var(--window-body-overflow);
-            display: flex;
-            flex-grow: 1;
-            flex-direction: column;
-        }
-        /* ウィンドウの中身 */
-        .window-body-content{
-            all: unset;
-            position: relative;
-            overflow: auto;
-            display: flex;
-            flex-grow: 1;
-            flex-direction: column;
-            border-top: #2D2D2D ridge 3px;
-            border-left: #2D2D2D ridge 3px;
-            border-right: #D3D3D3 groove 3px;
-            border-bottom: #D3D3D3 groove 3px;
-        }
-        /* ウィンドウ内のiframe設定 */
-        .window-body-content-frame{
-            border: none;
-            display: block;
-            height: 100%;
-            width: 100%;
-        }
-        /* ドラッグ中 */
-        .window-body-content.is-drag{
-            pointer-events: none;
-        }
-        .window-body-content::after{
-            content: "";
-            backdrop-filter: var(--window-body-content-after-backdrop-filter);
-            transition: backdrop-filter 75ms ease-in;
-        }
-        .window-body-content.is-drag::after{
-            content: "";
-            width: 100%;
-            height: 100%;
-            position: absolute;
-            backdrop-filter: var(--window-body-content-is-drag-after-backdrop-filter);
-            background: var(--window-body-content-is-drag-after-background);
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%,-50%);
-        }
-        /* アクティブではない */
-        .window:not(.is-active) .window-header{
-            background: linear-gradient(90deg, rgb(126, 126, 128) 30%, #cecece 100%);
-        }
-        .window:not(.is-active) .window-body-content{
-            pointer-events: none;
-        }
-        .window:not(.is-active) .window-body-content::before{
-            content: "";
-            width: 100%;
-            height: 100%;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%,-50%);
-        }
+.window-header {
+    box-sizing: border-box;
+    display: flex;
+    flex: 0 0 28px;
+    align-items: center;
+    gap: 5px;
+    padding: 2px 4px;
+    overflow: hidden;
+    border: 2px solid #d3d3d3;
+    background: var(--ws-header-inactive);
+    cursor: default;
+    touch-action: none;
+}
 
-        /* WindowSystem 縁(当たり判定) */
-        .window-decision{
-            position: absolute;
-            background: var(--window-decision-background);
-            opacity: var(--window-decision-opacity);
-        }
-        /*  top/bottom/left/right */
-        .window-decision-top{
-            width: 100%;
-            height: var(--window-decision-top-height);
-            top: 0;
-            left: 50%;
-            transform: translate(-50%,-100%);
-            cursor: row-resize;
-        }
-        .window-decision-bottom{
-            width: 100%;
-            height: var(--window-decision-bottom-height);
-            bottom: 0;
-            left: 50%;
-            transform: translate(-50%,100%);
-            cursor: row-resize;
-        }
-        .window-decision-left{
-            width: var(--window-decision-left-width);
-            height: 100%;
-            top: 50%;
-            left: 0;
-            transform: translate(-100%,-50%);
-            cursor: col-resize;
-        }
-        .window-decision-right{
-            width: var(--window-decision-right-width);
-            height: 100%;
-            top: 50%;
-            right: 0;
-            transform: translate(100%,-50%);
-            cursor: col-resize;
-        }
-        /* top-left/top-right/bottom-left/bottom-right */
-        .window-decision-top-left{
-            width: var(--window-decision-top-left-width);
-            height: var(--window-decision-top-left-height);
-            top: 0;
-            left: 0;
-            transform: translate(-100%,-100%);
-            cursor: nwse-resize	;
-        }
-        .window-decision-top-right{
-            width: var(--window-decision-top-right-width);
-            height: var(--window-decision-top-right-height);
-            top: 0;
-            right: 0;
-            transform: translate(100%,-100%);
-            cursor: nesw-resize;
-        }
-        .window-decision-bottom-left{
-            width: var(--window-decision-bottom-left-width);
-            height: var(--window-decision-bottom-left-height);
-            bottom: 0;
-            left: 0;
-            transform: translate(-100%,100%);
-            cursor: nesw-resize	;
+.window.is-active .window-header {
+    background: var(--ws-header-active);
+}
 
-        }
-        .window-decision-bottom-right{
-            width: var(--window-decision-bottom-right-width);
-            height: var(--window-decision-bottom-right-height);
-            bottom: 0;
-            right: 0;
-            transform: translate(100%,100%);
-            cursor: nwse-resize	;
+.window.is-movable:not(.is-maximized) .window-header {
+    cursor: move;
+}
 
-        }
+.window-header-icon-box {
+    display: none;
+    flex: 0 0 20px;
+    height: 20px;
+    pointer-events: none;
+}
 
-        .window-debug{
-            --window-debug-border-color: #f28e0177;
-            --window-debug-font-color: #f28e01bf;
-            --window-debug-background-color: #000000e0;
-            --window-debug-border-style: solid;
-            --window-debug-header-border-size: 2px;
-            --window-debug-border-size: 1px;
+.window.is-icon .window-header-icon-box {
+    display: block;
+}
 
-        }
-        /* debug用 */
-        .window:not(.is-log) .window-debug{
-            display: none;
-        }        
-        .window:not(.is-DebagMode) .window-debug{
-            display: none;
-        }
-        .window-debug{
-            display:block;
-            position:absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%,-50%);
-            width: 100%;
-            height: 100%;
-            background: var(--window-debug-background-color);
-            color: var(--window-debug-font-color);
-            backdrop-filter: blur(2px);
-            overflow: scroll;
-        }
-        .window-debug *{
-            margin: 0;
-            box-sizing: border-box;
-        }
-        /* 全体 */
-        .window-debug-content{
-            display: flex;
-            align-items: center;
-            flex-direction:column;
-            padding: 10px 10px;
-            gap: 1em;
-        }
-        .window-debug-content-body{
-            width: 100%;
-            display: flex;
-            align-items: center;
-            flex-direction:column;
-            gap: 0.5em;
-        }
-        /* ヘッダー */
-        .window-debug-content-header{
-            display: flex;
-            border:var(--window-debug-border-color) var(--window-debug-border-style) var(--window-debug-header-border-size);
-            width: 100%;
-            justify-content: space-between;
-            align-items: center;
-            box-sizing: border-box;
-            padding: 2px 10px;
-            overflow-x: scroll;
-            user-select:text;
-        }
-        .window:not(.is-DebagMode) .window-debug-content-header{
-            user-select:none;
-        }
-        /* ヘッダーのData部分 */
-        .window-debug-content-header span{
-            border: #0a9fe4 1px solid;
-            border-radius: 5px;
-            padding: 0px 10px;
-        }
-        /* テーブルのコンテンツ */
-        .window-debug-content-table{
-            width: 100%;
-            border:var(--window-debug-border-color) var(--window-debug-border-style) var(--window-debug-border-size);
-            box-sizing: border-box;
-            user-select:text;
-        }
-        .window:not(.is-DebagMode) .window-debug-content-table{
-            user-select:none;
-        }
-        .window-debug-content-table-header{
-            width: 100%;
-            border:var(--window-debug-border-color) var(--window-debug-border-style) var(--window-debug-border-size);
-            padding: 2px 10px;
-            text-align: left;
-            overflow-x: scroll;
+.window-header-icon {
+    display: block;
+    width: 20px;
+    height: 20px;
+    object-fit: contain;
+}
 
-        }
-        .window-debug-content-table-body{
-            width: 100%;
-            display: flex;
-            justify-content: space-between;
+.window-header-title {
+    min-width: 0;
+    flex: 1 1 auto;
+    overflow: hidden;
+    pointer-events: none;
+}
 
+.window-header-title-box {
+    width: 100%;
+    overflow: hidden;
+}
 
-        }
-        .window-debug-content-table-body-info{
-            border:var(--window-debug-border-color) var(--window-debug-border-style) var(--window-debug-border-size);
-            padding: 2px 10px;
-            width: 20%;
-            text-align: left;
-            overflow-x: scroll;
+.window-header-title-text {
+    display: inline-block;
+    white-space: nowrap;
+}
 
-        }
-        .window-debug-content-table-body-content{
-            border:var(--window-debug-border-color) var(--window-debug-border-style) var(--window-debug-border-size);
-            padding: 2px 10px;
-            width: 80%;
-            text-align: right;
-            overflow-x: scroll;
+.window-header-title-text.is-scroll-animation {
+    animation: ws-title-scroll 10s linear infinite;
+}
 
-        }            
+@keyframes ws-title-scroll {
+    0%,
+    15% {
+        transform: translateX(0);
+    }
+    50% {
+        transform: translateX(-100%);
+    }
+    51% {
+        transform: translateX(100%);
+    }
+    100% {
+        transform: translateX(0);
+    }
+}
+
+.window-header-button-area {
+    display: flex;
+    align-self: stretch;
+    align-items: center;
+}
+
+.window-header-button {
+    box-sizing: border-box;
+    width: 22px;
+    height: 22px;
+    padding: 0;
+    border: 3px outset #d3d3d3;
+    background: #e2041b;
+    color: #fff;
+    cursor: pointer;
+    font:
+        16px/1 Arial,
+        sans-serif;
+}
+
+.window-header-button:active {
+    border-style: inset;
+}
+
+.window-body {
+    position: relative;
+    display: flex;
+    min-height: 0;
+    flex: 1 1 auto;
+    overflow: hidden;
+}
+
+.window-body-content {
+    position: relative;
+    display: flex;
+    min-width: 0;
+    min-height: 0;
+    flex: 1 1 auto;
+    overflow: hidden;
+    border: 3px inset #d3d3d3;
+    background: #fff;
+}
+
+.window-body-content-frame {
+    display: block;
+    width: 100%;
+    height: 100%;
+    border: 0;
+    background: #fff;
+}
+
+.window:not(.is-active) .window-body-content::after,
+.window-body-content.is-drag::after {
+    position: absolute;
+    inset: 0;
+    content: "";
+}
+
+.window-body-content.is-drag::after {
+    background: #ffffff45;
+    backdrop-filter: blur(1px);
+}
+
+.window-decision {
+    position: absolute;
+    z-index: 2;
+    display: block;
+    background: transparent;
+    touch-action: none;
+}
+
+.window:not(.is-resizable) .window-decision,
+.window.is-maximized .window-decision {
+    display: none;
+}
+
+.window-decision-top,
+.window-decision-bottom {
+    left: 4px;
+    width: calc(100% - 8px);
+    height: 7px;
+    cursor: ns-resize;
+}
+
+.window-decision-left,
+.window-decision-right {
+    top: 4px;
+    width: 7px;
+    height: calc(100% - 8px);
+    cursor: ew-resize;
+}
+
+.window-decision-top {
+    top: -5px;
+}
+.window-decision-bottom {
+    bottom: -5px;
+}
+.window-decision-left {
+    left: -5px;
+}
+.window-decision-right {
+    right: -5px;
+}
+
+.window-decision-top-left,
+.window-decision-top-right,
+.window-decision-bottom-left,
+.window-decision-bottom-right {
+    width: 11px;
+    height: 11px;
+}
+
+.window-decision-top-left {
+    top: -5px;
+    left: -5px;
+    cursor: nwse-resize;
+}
+.window-decision-top-right {
+    top: -5px;
+    right: -5px;
+    cursor: nesw-resize;
+}
+.window-decision-bottom-left {
+    bottom: -5px;
+    left: -5px;
+    cursor: nesw-resize;
+}
+.window-decision-bottom-right {
+    right: -5px;
+    bottom: -5px;
+    cursor: nwse-resize;
+}

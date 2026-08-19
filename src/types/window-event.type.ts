@@ -1,3 +1,5 @@
+import type { DisplayType } from "./window-config.type.js";
+
 export type WindowEvents = {
     "window:move": { id: string; x: number; y: number };
     "window:close": { id: string };

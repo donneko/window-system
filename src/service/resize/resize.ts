@@ -1,4 +1,4 @@
-import { validation } from "../../util/safety/validation/main";
+import { validation } from "../../util/safety/validation/main.js";
 
 type size = {
     x:number,

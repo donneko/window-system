@@ -8,22 +8,22 @@ export type ErrorOption = {
 export type ErrorCauseJSON = {
     name?: string;
     message?: string;
-    stack?: string;
+    stack?: string | undefined;
 };
 
 export type AppErrorObj = {
     message?: string;
     name?: string;
-    code?: number;
+    code?: number | undefined;
     meta?: unknown;
-    stack?: string;
-    cause?: ErrorCauseJSON;
+    stack?: string | undefined;
+    cause?: ErrorCauseJSON | undefined;
 };
 
 export class AppError extends Error{
     meta? :unknown;
-    code? :number;
-    cause?:Error;
+    code :number | undefined;
+    cause:Error | undefined;
 
     constructor(message:string,option:ErrorOption = {}){
         super(message);

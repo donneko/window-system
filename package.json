@@ -1,11 +1,15 @@
 {
   "name": "@donneko/window-system",
   "version": "0.0.1",
-  "main": "./dist/index.js",
+  "main": "./dist/main.js",
   "exports": {
-    ".": "./dist/index.js"
+    ".": {
+      "types": "./dist/main.d.ts",
+      "import": "./dist/main.js"
+    },
+    "./window-style.css": "./dist/window-style.css"
   },
-  "types": "dist/index.d.ts",
+  "types": "./dist/main.d.ts",
   "files": [
     "dist/",
     "docs/",
@@ -15,7 +19,9 @@
   "scripts": {
     "clean": "node -e \"require('node:fs').rmSync('dist', { recursive: true, force: true })\"",
     "test": "vitest run",
-    "build": "npm run clean && tsc",
+    "build": "npm run clean && tsc && npm run copy:assets",
+    "copy:assets": "node -e \"require('node:fs').copyFileSync('src/assets/css/window-style.css', 'dist/window-style.css')\"",
+    "docs": "typedoc",
     "prepack": "npm run build"
   },
   "repository": {
@@ -33,6 +39,7 @@
     "eslint": "^10.7.0",
     "eslint-config-prettier": "^10.1.8",
     "globals": "^17.7.0",
+    "jsdom": "^30.0.1",
     "prettier": "^3.9.5",
     "tsx": "^4.22.4",
     "typedoc": "^0.28.20",
