@@ -1,13 +1,10 @@
 import { WindowSystemError } from "../errors/window-system-public-error.js";
 import { normalizeWindowInput } from "../state/normalize-window.js";
 import type { WindowUpdate } from "../types/window-config.type.js";
+import type { WindowManagerOptions } from "../types/window-manager.type.js";
 import type { WindowInput, WindowSnapshot } from "../types/window-snapshot.type.js";
 import { ManagedWindow } from "../window/managed-window.js";
 import { WindowStack } from "./window-stack.js";
-
-export type WindowManagerOptions = {
-    container?: HTMLElement;
-};
 
 function assertId(id: unknown): asserts id is string {
     if (typeof id !== "string" || id.trim() === "") {

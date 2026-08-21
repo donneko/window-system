@@ -1,29 +1,12 @@
-import {
-    resizeBounds,
-    type ResizeDirection,
-    type SizeConstraints,
-} from "../geometry/window-geometry.js";
+import { resizeBounds } from "../geometry/window-geometry.js";
 import { Disposer } from "../shared/disposer.js";
-import type { WindowBounds } from "../types/window-config.type.js";
+import type { ResizeDirection, SizeConstraints } from "../types/window-geometry.type.js";
 import type { WindowSnapshot } from "../types/window-snapshot.type.js";
+import type {
+    PointerSession,
+    WindowPointerCallbacks,
+} from "../types/window-pointer-controller.type.js";
 import type { WindowView } from "./window-view.js";
-
-type PointerSession = {
-    pointerId: number;
-    mode: "move" | "resize";
-    direction?: ResizeDirection;
-    startClientX: number;
-    startClientY: number;
-    startBounds: WindowBounds;
-};
-
-export type WindowPointerCallbacks = {
-    getState(): WindowSnapshot;
-    activate(): void;
-    close(): void;
-    updateBounds(bounds: WindowBounds): void;
-    setInteracting(interacting: boolean): void;
-};
 
 function constraintsFrom(state: WindowSnapshot): SizeConstraints {
     return {

@@ -1,4 +1,5 @@
-import type { ResizeDirection } from "../geometry/window-geometry.js";
+import type { WindowElements } from "../types/window-elements.type.js";
+import type { ResizeDirection } from "../types/window-geometry.type.js";
 
 const SELECTORS = {
     header: ".js-window-header-body",
@@ -10,21 +11,6 @@ const SELECTORS = {
     close: ".js-window-header-delete-button",
     resizeHandle: "[data-resize-direction]",
 } as const;
-
-export type WindowElements = {
-    root: HTMLElement;
-    header: HTMLElement;
-    titleBox: HTMLElement;
-    title: HTMLElement;
-    icon: HTMLImageElement;
-    content: HTMLElement;
-    iframe: HTMLIFrameElement;
-    close: HTMLButtonElement;
-    resizeHandles: ReadonlyArray<{
-        element: HTMLElement;
-        direction: ResizeDirection;
-    }>;
-};
 
 function requiredElement<T extends Element>(root: ParentNode, selector: string): T {
     const element = root.querySelector<T>(selector);

@@ -1,10 +1,4 @@
-export type WindowSystemErrorCode =
-    | "DUPLICATE_ID"
-    | "INVALID_CONFIG"
-    | "INVALID_ID"
-    | "INVALID_URL"
-    | "MANAGER_DESTROYED"
-    | "WINDOW_NOT_FOUND";
+import type { WindowSystemErrorCode } from "../types/window-system-error.type.js";
 
 export class WindowSystemError extends Error {
     readonly code: WindowSystemErrorCode;

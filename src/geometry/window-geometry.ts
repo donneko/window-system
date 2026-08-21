@@ -1,13 +1,5 @@
 import type { WindowBounds } from "../types/window-config.type.js";
-
-export type ResizeDirection = "n" | "s" | "e" | "w" | "ne" | "nw" | "se" | "sw";
-
-export type SizeConstraints = {
-    minWidth: number;
-    minHeight: number;
-    maxWidth: number | null;
-    maxHeight: number | null;
-};
+import type { ResizeDirection, SizeConstraints } from "../types/window-geometry.type.js";
 
 export function clampSize(value: number, minimum: number, maximum: number | null): number {
     return Math.min(Math.max(value, minimum), maximum ?? Infinity);

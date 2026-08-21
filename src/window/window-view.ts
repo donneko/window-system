@@ -1,6 +1,7 @@
 import { WINDOW_BODY_HTML } from "../assets/html/template.js";
+import type { WindowElements } from "../types/window-elements.type.js";
 import type { WindowSnapshot } from "../types/window-snapshot.type.js";
-import { getWindowElements, type WindowElements } from "./window-elements.js";
+import { getWindowElements } from "./window-elements.js";
 
 export class WindowView {
     readonly elements: WindowElements;

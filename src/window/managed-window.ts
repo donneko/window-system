@@ -1,14 +1,10 @@
 import { maximizeBounds } from "../geometry/window-geometry.js";
 import { applyWindowUpdate } from "../state/apply-window-update.js";
+import type { ManagedWindowCallbacks } from "../types/managed-window.type.js";
 import type { WindowBounds, WindowUpdate } from "../types/window-config.type.js";
 import type { WindowSnapshot } from "../types/window-snapshot.type.js";
 import { WindowPointerController } from "./window-pointer-controller.js";
 import { WindowView } from "./window-view.js";
-
-export type ManagedWindowCallbacks = {
-    activate(id: string): void;
-    close(id: string): void;
-};
 
 export class ManagedWindow {
     private state: WindowSnapshot;

@@ -1,7 +1,5 @@
 import type { WindowSnapshot } from "../types/window-snapshot.type.js";
-import type { ManagedWindow } from "../window/managed-window.js";
-
-type WindowEntries = () => IterableIterator<[string, ManagedWindow]>;
+import type { WindowEntries } from "../types/window-stack.type.js";
 
 export class WindowStack {
     constructor(private readonly entries: WindowEntries) {}
