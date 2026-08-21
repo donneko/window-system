@@ -1,6 +1,6 @@
 {
     "name": "@donneko/window-system",
-    "version": "0.2.0-beta.0",
+    "version": "0.2.0-alpha.0",
     "main": "./dist/index.js",
     "exports": {
         ".": {
@@ -12,9 +12,9 @@
     "types": "./dist/index.d.ts",
     "files": [
         "dist/",
-        "docs/",
         "README.md",
-        "LICENSE"
+        "LICENSE",
+        "CHANGELOG.md"
     ],
     "publishConfig": {
         "access": "public"
