@@ -1,5 +1,5 @@
 import { beforeEach, describe, expect, it } from "vitest";
-import { WindowManager, WindowSystemError } from "../src/main.js";
+import { WindowManager, WindowSystemError } from "../src/index.js";
 import { pointerEvent, resetDocument, windowRoot } from "./helpers/dom.js";
 
 describe("WindowManager", () => {

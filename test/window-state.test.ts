@@ -1,5 +1,5 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import { WindowSystemError } from "../src/main.js";
+import { WindowSystemError } from "../src/index.js";
 import { resizeBounds } from "../src/geometry/window-geometry.js";
 import { Disposer } from "../src/shared/disposer.js";
 import { applyWindowUpdate } from "../src/state/apply-window-update.js";

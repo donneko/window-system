@@ -1,5 +1,5 @@
 import { beforeEach, describe, expect, it } from "vitest";
-import { WindowManager } from "../src/main.js";
+import { WindowManager } from "../src/index.js";
 import { resetDocument, windowRoot } from "./helpers/dom.js";
 
 describe("window view", () => {
