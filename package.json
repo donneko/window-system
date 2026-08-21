@@ -16,6 +16,9 @@
         "README.md",
         "LICENSE"
     ],
+    "publishConfig": {
+        "access": "public"
+    },
     "scripts": {
         "clean": "node -e \"require('node:fs').rmSync('dist', { recursive: true, force: true })\"",
         "test": "vitest run",
@@ -25,6 +28,7 @@
         "build": "npm run clean && tsc && npm run copy:assets",
         "copy:assets": "node -e \"require('node:fs').copyFileSync('src/assets/css/window-style.css', 'dist/window-style.css')\"",
         "docs": "typedoc",
+        "prepublishOnly": "npm test && npm run typecheck && npm run lint && npm run build",
         "prepack": "npm run build"
     },
     "repository": {

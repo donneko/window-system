@@ -67,16 +67,6 @@ for (const snapshot of snapshots) {
 
 詳細は [開発ドキュメント](docs/dev/window.md) を参照してください。
 
-## 開発
-
-```bash
-npm test
-npm run typecheck
-npm run lint
-npm run format:check
-npm run build
-npm run docs
-```
 
 ## License
 
