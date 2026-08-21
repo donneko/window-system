@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="ja">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>WindowSystem demo</title>
+        <link rel="stylesheet" href="../dist/window-style.css" />
+        <style>
+            html,
+            body {
+                width: 100%;
+                height: 100%;
+                margin: 0;
+                overflow: hidden;
+            }
+            body {
+                position: relative;
+                background: #0c8cac;
+            }
+        </style>
+    </head>
+    <body>
+        <script type="module">
+            import { WindowManager } from "../dist/index.js";
+
+            const windows = new WindowManager();
+            windows.createWindow({
+                title: "WindowSystem demo",
+                contentUrl: "./demo-content.html",
+                x: 40,
+                y: 40,
+                width: 480,
+                height: 300,
+                minWidth: 240,
+                minHeight: 140,
+            });
+            windows.createWindow({
+                title: "Second window",
+                contentUrl: "./demo-content.html",
+                x: 260,
+                y: 180,
+                width: 400,
+                height: 240,
+            });
+
+            globalThis.windowSystem = windows;
+        </script>
+    </body>
+</html>
